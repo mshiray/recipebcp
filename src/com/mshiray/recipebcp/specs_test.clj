@@ -12,16 +12,19 @@
     ;;this is needed so that all required dependencies are loaded at boot time.
 
    ;;require all needed spec modules with respective prefixes
-   [com.mshiray.recipebcp.spec [recipe_specs :as rs] [ingredient_specs :as is] [user_specs :as us]]
+   [com.mshiray.recipebcp.spec
+    [recipe_specs :as rs]
+    [ingredient_specs :as is]
+    [user_specs :as us]]
 
    ;;require all needed user type namespace modules
    ;; (defrecords, deftypes, interfaces etc.)
-   [com.mshiray.recipebcp.domain.type user  recipe ingredient])
+   [com.mshiray.recipebcp.domain.type
+    user
+    recipe
+    ingredient])
 
-  (:import (com.mshiray.recipebcp.domain.type.recipe Recipe)
-           (com.mshiray.recipebcp.domain.type.user User)
-           (com.mshiray.recipebcp.domain.type.ingredient Ingredient)
-           (com.mshiray.recipebcp.domain.type.ingredient In_Measure)))
+);;ns end
 
 
 
@@ -96,7 +99,6 @@
 (s/valid? ::us/User user_with_lang_pref)
 ;; => true
 
-
 (def flour (Ingredient. "Wheat flour" ::is/bakery))         ;;Note:  '.' when record type is imported
 
 
@@ -167,8 +169,8 @@
 
 ;;append measures record isntance to flour ingredient for our bread recipe
 (def two_eggs (assoc eggs_with_specs ::in_measure eggs_qty
-                         ::in_measure_type ::Exact
-                         ::in_decription "dont carry all of them in one basket!"))
+                     ::in_measure_type ::Exact
+                     ::in_decription "dont carry all of them in one basket!"))
 
 (s/valid? ::is/Ingredient two_eggs)
 ;; => true
@@ -221,8 +223,8 @@
 
 ;;append measures record isntance to flour ingredient for our bread recipe
 (def qtr_tsp_salt (assoc salt ::in_measure salt_msr_qty
-                          ::in_measure_type ::Lightly_Packed
-                          ::in_decription "quarter tea spoon of sea salt"))
+                         ::in_measure_type ::Lightly_Packed
+                         ::in_decription "quarter tea spoon of sea salt"))
 
 
 
