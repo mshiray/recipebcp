@@ -57,7 +57,7 @@
 (s/def ::r_serving_instrn  #{::hot ::chilled ::cold ::frozen ::warm})
 
 ;;no. of people this recipe is measured for
-(s/def ::r_serves_no (s/and pos-int? > 0))
+(s/def ::r_serves_no (s/and pos-int?))
 
 (s/def ::r_ingredients (s/coll-of ::is/Ingredient :distinct true :min-count 1))
 
