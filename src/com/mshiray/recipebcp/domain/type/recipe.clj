@@ -5,7 +5,7 @@
 
 
 ;;Domain entity type for recipe
-(defrecord Recipe [^int RID
+(defrecord Recipe [^int r_RID
                    ^String r_name
                    ^User r_publisher
                    ^String r_description

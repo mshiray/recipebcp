@@ -11,7 +11,7 @@
 ;;recipe domain entity
 (s/def ::Recipe
   (s/keys
-   :req-un [::r_RID ::r_name ::us/User ::r_description ::r_estTime ::r_serves_no
+   :req-un [::r_RID ::r_name ::r_publisher ::r_description ::r_estTime ::r_serves_no
          ::r_diet ::r_cuisine ::r_category ::r_taste ::r_taste_meter ::r_ingredients]
    :opt-un [::r_tools ::r_cuisine_regional ::r_religious_tag ::r_serving_instrn ::r_companions]))
 
@@ -19,6 +19,8 @@
 (s/def ::r_RID pos-int?)
 
 (s/def ::r_name string?)
+
+(s/def ::r_publisher ::us/User)
 
 (s/def ::r_description string?)
 
@@ -57,7 +59,7 @@
 (s/def ::r_serving_instrn  #{::hot ::chilled ::cold ::frozen ::warm})
 
 ;;no. of people this recipe is measured for
-(s/def ::r_serves_no (s/and pos-int?))
+(s/def ::r_serves_no pos-int?)
 
 (s/def ::r_ingredients (s/coll-of ::is/Ingredient :distinct true :min-count 1))
 
