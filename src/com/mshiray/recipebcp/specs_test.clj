@@ -1,4 +1,4 @@
-(ns com.mshiray.recipebcp
+(ns com.mshiray.recipebcp.spec_test
 
   (:require
    [clojure.spec.alpha :as s]
@@ -226,15 +226,26 @@
                            ::rs/Bakery ::rs/Other ::T3
                            [two_cup_flour one_tsp_salt]))
 
+
+(s/valid? ::rs/Recipe bread_recipe)
+;; => false
+
+
+
 ;;define recipe defrecord with optional companion recipe added.
 (def omlette_recipe (Recipe. 134 "omlette" user_with_lang_pref
                              "masala omlette" "00:20" 1
                              ::rs/NonVeg ::rs/Indian ::rs/Breakfast ::rs/Spicy ::T4
                              [eggs salt]))
 
+(s/valid? ::rs/Recipe omlette_recipe)
+;; => false
+
 
 ;;append optional companion recipe property to existing recipe defrecord
 (def bread_omlette (assoc omlette_recipe ::rs/companions [bread_recipe]))
+
+(s/valid? ::rs/Recipe bread_omlette)
 
 ;;access nested properties of defrecord
 (-> bread_omlette :r_publisher :u_fname)
