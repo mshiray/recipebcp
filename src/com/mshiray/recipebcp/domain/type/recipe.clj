@@ -1,7 +1,6 @@
 (ns com.mshiray.recipebcp.domain.type.recipe
   (:gen-class)
-  (:import (com.mshiray.recipebcp.domain.type.user User)))
-;; => nil
+  (:import  (com.mshiray.recipebcp.domain.type.user User)))
 
 
 ;;Domain entity type for recipe
@@ -17,6 +16,3 @@
                    r_taste
                    r_taste_meter
                    r_ingredients])
-
-
-

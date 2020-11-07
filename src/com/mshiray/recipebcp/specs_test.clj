@@ -20,10 +20,11 @@
    ;;require all needed user type namespace modules
    ;; (defrecords, deftypes, interfaces etc.)
    [com.mshiray.recipebcp.domain.type
-    user
-    recipe
-    ingredient])
+    [user :as u]
+    [recipe :as r]
+    [ingredient :as i]]
 
+   );;require end
 );;ns end
 
 
@@ -83,9 +84,9 @@
 ;#######  Define required record type instances for our recipe spec validations ###########
 
 ;;define instance of user defrecord as the publisher of recipe
-(def user (User. 2345 "joesimpson" "Joe"
-                 "Simpson" "+919970456243" "jsms345@treemail.com"
-                 "23/11/1985" "11/02/2014"))
+(def user (u/->User 2345 "joesimpson" "Joe"
+                    "Simpson" "+919970456243" "jsms345@treemail.com"
+                    "23/11/1985" "11/02/2014"))
 
 
 ;;create new user record by adding optional lang pref property
@@ -99,7 +100,7 @@
 (s/valid? ::us/User user_with_lang_pref)
 ;; => true
 
-(def flour (Ingredient. "Wheat flour" ::is/bakery))         ;;Note:  '.' when record type is imported
+(def flour (i/->Ingredient "Wheat flour" ::is/bakery))         ;;Note:  '.' when record type is imported
 
 
 (s/valid? ::is/Ingredient flour)
@@ -165,7 +166,7 @@
 ;; => true
 
 ;;lets fetch two eggs for our omlette recipe prep
-(def eggs_qty (In_Measure. 2 ::is/no))
+(def eggs_qty (i/->In_Measure 2 ::is/no))
 
 ;;append measures record isntance to flour ingredient for our bread recipe
 (def two_eggs (assoc eggs_with_specs ::in_measure eggs_qty
@@ -182,7 +183,7 @@
 ;;(map #(apply t/Ingredient %) parsed-csv-file)
 
 ;;lets add flour ingredient measures required for our recipes
-(def flour_msr_qty (In_Measure. 2 ::is/C))
+(def flour_msr_qty (i/->In_Measure 2 ::is/C))
 
 ;;append measures record isntance to flour ingredient for our bread recipe
 (def two_cup_flour (assoc flour ::in_measure flour_msr_qty
@@ -215,11 +216,11 @@
 
 
 ;;create new ingredient record instance for salt
-(def salt (Ingredient. "salt" ::is/additive))
+(def salt (i/->Ingredient "salt" ::is/additive))
 
 ;;append measures properties to salt ingredient
 ;;lets add flour ingredient measures required for our recipes
-(def salt_msr_qty (In_Measure. 0.25 ::is/tsp))
+(def salt_msr_qty (i/->In_Measure 0.25 ::is/tsp))
 
 ;;append measures record isntance to flour ingredient for our bread recipe
 (def qtr_tsp_salt (assoc salt ::in_measure salt_msr_qty
@@ -246,11 +247,11 @@
 ;; => true
 
 
-(def bread_recipe (Recipe. 135 "bread"
-                           user_with_lang_pref "brown bread" "01:00" 4
-                           ::rs/Vegiterian ::rs/Western
-                           ::rs/Bakery ::rs/Other ::rs/T3
-                           bread_ingredients))
+(def bread_recipe (r/->Recipe 135 "bread"
+                              user_with_lang_pref "brown bread" "01:00" 4
+                              ::rs/Vegiterian ::rs/Western
+                              ::rs/Bakery ::rs/Other ::rs/T3
+                              bread_ingredients))
 
 
 
@@ -266,10 +267,10 @@
 
 
 ;;define recipe defrecord with optional companion recipe added.
-(def omlette_recipe (Recipe. 134 "omlette" user_with_lang_pref
-                             "masala omlette" "00:20" 1
-                             ::rs/NonVeg ::rs/Indian ::rs/Breakfast ::rs/Spicy ::rs/T4
-                             #{two_eggs qtr_tsp_salt}))
+(def omlette_recipe (r/->Recipe 134 "omlette" user_with_lang_pref
+                                "masala omlette" "00:20" 1
+                                ::rs/NonVeg ::rs/Indian ::rs/Breakfast ::rs/Spicy ::rs/T4
+                                #{two_eggs qtr_tsp_salt}))
 
 (s/valid? ::rs/Recipe omlette_recipe)
 ;; => true
