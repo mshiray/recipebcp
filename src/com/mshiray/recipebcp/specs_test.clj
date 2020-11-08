@@ -22,9 +22,7 @@
    [com.mshiray.recipebcp.domain.type
     [user :as u]
     [recipe :as r]
-    [ingredient :as i]]
-
-   );;require end
+    [ingredient :as i]]);;require end
 );;ns end
 
 
@@ -76,9 +74,6 @@
 ;;validate inline sequence key-val pair data
 (s/valid? ::is/Ingredient {:in_name "toast" :in_category ::is/bakery})
 ;; => true
-
-
-
 
 
 ;#######  Define required record type instances for our recipe spec validations ###########
@@ -244,36 +239,34 @@
 (def bread_ingredients #{two_cup_flour qtr_tsp_salt})
 
 (s/valid? ::rs/r_ingredients bread_ingredients)
-;; => true
 
 
+;;create bread recipe record instance
 (def bread_recipe (r/->Recipe 135 "bread"
                               user_with_lang_pref "brown bread" "01:00" 4
-                              ::rs/Vegiterian ::rs/Western
-                              ::rs/Bakery ::rs/Other ::rs/T3
+                              ::r/Vegiterian ::r/Western
+                              ::r/Bakery ::r/Other ::r/T3
                               bread_ingredients))
 
-
-
-
+;;print spec documentation on console
 (crpl/doc ::rs/Recipe)
 
+
 ;;uncomment to debug any validation errors
-;;(s/explain ::rs/Recipe bread_recipe)
+(s/explain ::rs/Recipe bread_recipe)
+
 
 ;;validate our bread recipe for any data mismatch
 (s/valid? ::rs/Recipe bread_recipe)
 ;; => true
 
-
 ;;define recipe defrecord with optional companion recipe added.
 (def omlette_recipe (r/->Recipe 134 "omlette" user_with_lang_pref
                                 "masala omlette" "00:20" 1
-                                ::rs/NonVeg ::rs/Indian ::rs/Breakfast ::rs/Spicy ::rs/T4
+                                ::r/NonVeg ::r/Indian ::r/Breakfast ::r/Spicy ::r/T4
                                 #{two_eggs qtr_tsp_salt}))
 
 (s/valid? ::rs/Recipe omlette_recipe)
-;; => true
 
 
 ;;append optional companion recipe property to existing recipe defrecord to recommend having a bread with our omlette
@@ -281,4 +274,3 @@
 
 (s/valid? ::rs/Recipe bread_omlette)
 ;; => true
-
