@@ -1,6 +1,10 @@
 /target
 /classes
 /checkouts
+.clj-kondo
+.lsp
+.metals
+.vscode
 profiles.clj
 pom.xml
 pom.xml.asc
