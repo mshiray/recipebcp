@@ -1,7 +1,6 @@
 (ns com.mshiray.recipebcp.spec.ingredient_specs
   (:require [clojure.spec.alpha :as s]
-
-            ))
+            [com.mshiray.recipebcp.domain.type.ingredient :as i]))
 
 ;;collection catalog of ingredient
 (s/def ::IngredientCatalog (s/coll-of ::Ingredient :min-count 1 :distinct true))
@@ -33,29 +32,15 @@
 (s/def ::in_measure_no (s/and number? > 0.0))
 
 ;;https://en.wikipedia.org/wiki/Cooking_weights_and_measures
-(s/def ::in_measure_units  #{::g "Grams", ::kg "Kilograms", ::lt "Litres",
-                             ::tsp "Tea Spoon", ::tbsp "Table Spoon", ::lb "Pound", ::mL "Milli Litres",
-                             ::pt "pint", ::qt "Quart", ::ssp "Salt Spoon",
-                             ::csp "Coffee Spoon", ::tcf "Tea Cup", ::wgf "Wine Glass",
-                             ::gal "Gallon", ::S "Small", ::M "Medium",
-                             ::L "Large", ::fl-oz "Fluid Ounce",
-                             ::C "cup", ::cm "Centimeter", ::no "number", ::pot "Pottle",
-                             ::ds "Dash", ::pn "Pinch", ::dr "Drop",
-                             ::smdg "Smidgen", ::dsp "Dessert Spoon", ::sc "Scoop"})
+(s/def ::in_measure_units  i/in_measure_units)
 
 ;;Applicable for units of measures like cups or spoons..
-(s/def ::in_measure_type  #{::Firmly_Packed ::Lightly_Packed ::Even
-                            ::Rounded ::Heaped ::Sifted ::Approx ::Exact})
-
-
+(s/def ::in_measure_type  i/in_measure_type)
 
 (s/def ::in_description string?)
 
 ;;broader food category the ingredient belongs to
-(s/def ::in_category  #{::spice ::oil ::dairy ::fat
-                        ::meat ::vegitable ::grain ::pulses ::dryfruit ::souce ::herb ::mix
-                        ::flour ::fruit ::poultry ::juice ::bakery ::additive ::seafood ::drink
-                        ::confection ::other})
+(s/def ::in_category i/in_category)
 
 ;;form factor of an ingredient needed for recipe
 (s/def ::IngredientFormFactor
@@ -63,27 +48,14 @@
    :req-un [::in_form]
    :opt-un [::in_process_type ::in_form_details]))
 
-(s/def ::in_form  #{::whole ::ground ::paste ::liquid ::usual
-                    ::chopped ::cut ::powder ::grated ::minced})
 
-(s/def ::in_process_type  #{::fresh ::ripe ::unripe ::raw ::dried ::salted
-                            ::roasted ::fried
-                            ::boiled ::pickled ::sugared ::baked ::grilled
-                            ::stirred ::frozen ::boneless ::cleaned
-                            ::canned ::stock ::marinated ::normal
-                            ::seasoned ::extract ::usual ::none})
+(s/def ::in_form  i/in_form)
 
+(s/def ::in_process_type  i/in_process_type)
 
-(s/def ::in_form_details  #{::small ::medium ::large
-                            ::fine ::granular ::coarse
-                            ::thick ::thin
-                            ::hard ::soft
-                            ::light ::strong
-                            ::normal})
+(s/def ::in_form_details i/in_form_details)
 
-;;special instructions/attributes the ingredient need to satisfy
 ;;todo: need to make it multi value
-(s/def ::in_special_instrns #{::glueten_free ::low_fat ::halal ::organic
-                                       ::Kosher ::PureVeg ::lactose_free ::msg_free})
+(s/def ::in_special_instrns i/in_special_instrns)
 
 (s/def ::alergy_warning boolean?);;if this ingredient is a known alergy inducer
