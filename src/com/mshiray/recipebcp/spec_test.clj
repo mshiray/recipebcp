@@ -48,13 +48,16 @@
 
 ;;generate sample data from spec defs
 (gen/generate (s/gen pos-int?))
+;; => 54
+
 ;; => 52589684
 
 (gen/generate (s/gen ::rs/r_cuisine))
 ;; => :com.mshiray.recipebcp.domain.type.recipe/African
 
 ;;generate sample test data for specified spec def
-(gen/sample (s/gen ::rs/r_diet 3))
+;;(gen/sample (s/gen ::rs/r_diet 3))
+
 ;; => (:com.mshiray.recipebcp.domain.type.recipe/Vegiterian
 ;;     :com.mshiray.recipebcp.domain.type.recipe/Vegan
 ;;   ....)
